@@ -1,0 +1,215 @@
+//<script type="text/jsx">
+  let creado, user;
+  const fechaModificado = new Date().toLocaleString() + " ";
+
+      function Admin() {
+          const [dataSource, setdataSource] = useState([])
+          const [view, setView] = useState(true)
+          const [dataid, setDataid] = useState({
+            id: " ",
+            empresa: " ",
+            departamento: " ",
+            titulo: " ",
+            descripcion: " ",
+            estado: " ",
+            solucion: " "
+          });
+           useEffect(User, [])
+
+      async function adminvalida() {
+          await google.script.run.withSuccessHandler(res => {
+              user = (res)
+              if(user === creado) { listar(); setView(false) }
+              else setView(true)
+           }).validarUser(creado);
+      }
+
+      async function listar() {
+          await google.script.run.withSuccessHandler(res => {
+              const respuest = JSON.parse(res);
+              let arreglo = [];
+              respuest
+                  .sort((a, b) =>  b.fechaCreado > a.fechaCreado ? 1 : -1)
+                  .map(data => {
+                    arreglo.push({...data})
+                  })
+                  setdataSource(arreglo)
+              }).listarUser();
+          }
+
+      async function User() {
+          await google.script.run.withSuccessHandler(res => {
+              creado = (res)
+              adminvalida()
+          }).perfil();
+      }
+
+      function handCheck(id) {
+        const rfind = dataSource.find((dat) => dat.id === id)
+            setDataid({
+                id : rfind.id,
+                creado: rfind.creado,
+                empresa: rfind.empresa,
+                departamento: rfind.departamento,
+                titulo: rfind.titulo,
+                descripcion: rfind.descripcion,
+                estado: rfind.estado,
+                solucion: rfind.solucion,
+            });listar();
+      }
+
+     const updateData = async () => {
+        notificacionGuardando("Actualizando Registro");
+         await google.script.run.withSuccessHandler(resp => {
+            notificacionTareaTerminada(resp.titulo, resp.descripcion);
+            User()
+            Semail(dataid.id, user, dataid.creado, fechaModificado, dataid.titulo, dataid.descripcion, dataid.empresa, dataid.departamento, dataid.estado, dataid.solucion)
+        }).updateTicket(dataid.id, creado, fechaModificado, dataid.empresa, dataid.departamento, dataid.titulo, dataid.descripcion, dataid.estado, dataid.solucion)
+      }
+
+      const checkData = (e) => {
+        const { name, value } = e.target;
+        setDataid({...dataid, [name]: value})
+    }
+
+    const bcolor = (kfalta) => {
+        if(kfalta === "No Asignado") return ('#FFBB5C')
+        else if(kfalta === "En Progreso") return ('#337CCF')
+        else if(kfalta === "Completado") return ('#435334')
+        else if(kfalta === "Cancelado") return ('#FF6969')
+      }
+
+    function Semail(id, user, creado, fechaModificado, titulo, descripcion, empresa, departamento, estado, solucion) {
+        google.script.run.withSuccessHandler(resp => {
+         // console.log(resp)
+        }).emailUser(id, user, creado, fechaModificado, titulo, descripcion, empresa, departamento, estado, solucion)
+      }
+
+      return (
+        <div className="container-sm rounded shadow" style={{"marginTop": '2rem'}}>
+           <div>
+               <h2 className="p-2 bg-primary-subtle bg-opacity-10 border border-warning border-start-0 rounded-end fst-italic">Sistema de Gerencia de Casos UnixFyOne</h2>
+           </div>
+           <div>
+                <h1 hidden={!view}>No Posee Acceso</h1>
+            </div>
+            <table className="table table-hover" hidden={view}>
+                      <thead className="bg-secondary text-white text-center">
+                          <tr>
+                          <th className="p-2">ID</th>
+                          <th className="p-2">Fecha Creado</th>
+                          <th className="p-2">Empresa</th>
+                          <th className="p-2">Departamento</th>
+                          <th className="p-2">Titulo del Caso</th>
+                          <th className="p-2">Editar</th>
+                          <th className="p-2">Estado</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {dataSource.map((datos) =>
+                          <tr key={datos.id}>
+                          <td className="text-center" >{datos.id}</td>
+                          <td className="text-center">{dayjs(datos.fechaCreado).format("DD/MM/YYYY")}</td>
+                          <td>{datos.empresa}</td>
+                          <td>{datos.departamento}</td>
+                          <td>{datos.titulo}</td>
+                          <td><button className="btn bg-primary text-white" data-bs-target="#ApprovarModel" data-bs-toggle="modal" onClick={() => {handCheck(datos.id)}}>Edit</button></td>
+                          <td className="badge rounded-pill text-white fs-8 mx-auto mt-3" style={{"backgroundColor": bcolor(datos.estado)}}>{datos.estado}</td>
+                      </tr>
+                          )}
+                      </tbody>
+            </table>
+            <div className="modal fade" id="ApprovarModel" aria-hidden="true" aria-labelledby="ApprovarModelLabel">
+                  <div className="modal-dialog modal-dialog-centered">
+                      <div className="modal-content">
+                          <div className="modal-header bg-dark bg-gradient">
+                              <h1 className="modal-title fs-5 text-white" id="ApprovarModelLabel">Por Favor Ingrese Los Datos</h1>
+                              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div className="modal-body">
+                          <form className="needs-validation">
+                              <div className="row g-4">
+                                  <div className="col">
+                                      <select className="form-select form-select-sm" name="empresa" required onChange={checkData}>
+                                          <option defaultValue={dataid.empresa}>{dataid.empresa}</option>
+                                          <option value="COOSERPOZ">COOSERPOZ</option>
+                                          <option value="DYNAXTREAM">DYNAXTREAM</option>
+                                          <option value="ENTERGIX">ENTERGIX</option>
+                                          <option value="ESSENTIAL OFS">ESSENTIAL OFS</option>
+                                          <option value="INTEGRA WS">INTEGRA WS</option>
+                                          <option value="KYBALION TECHNOLOGIES">KYBALION TECHNOLOGIES</option>
+                                          <option value="NEOCONEX">NEOCONEX</option>
+                                          <option value="PETROALIANZA">PETROALIANZA</option>
+                                          <option value="PETROALIANZA ORIENTE">PETROALIANZA ORIENTE</option>
+                                          <option value="PROILIFT">PROILIFT</option>
+                                          <option value="SINOENERGY">SINOENERGY</option>
+                                          <option value="TECNO">TECNO CONSULTORES</option>
+                                          <option value="XENIXS">XENIXS</option>
+                                          <option value="XPERTS">XPERTS</option>
+                                      </select>
+                                  </div>
+                                  <div className="col">
+                                      <select className="form-select form-select-sm" name="departamento" required onChange={checkData}>
+                                          <option defaultValue={dataid.departamento}>{dataid.departamento}</option>
+                                          <option value="Activos Fijos, Control y Gestion">Activos Fijos, Control y Gestión</option>
+                                          <option value="Administracion y Finanzas">Administración y Finanzas</option>
+                                          <option value="Almacen">Almacen</option>
+                                          <option value="Comercialización">Comercialización</option>
+                                          <option value="Facilidades y Servicios Generales">Facilidades y Servicios Generales</option>
+                                          <option value="Gerencia General">Gerencia General</option>
+                                          <option value="Gestion de Talento Humano">Gestion de Talento Humano</option>
+                                          <option value="Hot Oiler">Hot Oiler</option>
+                                          <option value="HSE">HSE</option>
+                                          <option value="IT">IT</option>
+                                          <option value="Junta Directiva">Junta Directiva</option>
+                                          <option value="Legal">Legal</option>
+                                          <option value="Logistica">Logistica</option>
+                                          <option value="Mantenimiento">Mantenimiento</option>
+                                          <option value="Medios e imagen corporativa">Medios e imagen corporativa</option>
+                                          <option value="Operaciones">Operaciones</option>
+                                          <option value="Operaciones (Coiled Tubing)">Operaciones (Coiled Tubing)</option>
+                                          <option value="Operaciones (Guaya Electrica)">Operaciones (Guaya Electrica)</option>
+                                          <option value="Operaciones (Guaya Fina)">Operaciones (Guaya Fina)</option>
+                                          <option value="Operaciones (Well Testing)">Operaciones (Well Testing)</option>
+                                          <option value="Procura">Procura</option>
+                                          <option value="Proyectos - Planificacion - Estimacion de costos">Proyectos - Planificación - Estimación de costos</option>
+                                          <option value="Riesgos">Riesgos</option>
+                                          <option value="Tesoreria">Tesoreria</option>
+                                          <option value="UnixfyOne E&S">UnixfyOne E&S</option>
+                                          <option value="Ventas">Ventas</option>
+                                         <option value="Yacimientos">Yacimientos</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div className="row mt-3">
+                                  <label className="form-label">Titulo del Caso</label>
+                                  <label type="text" className="form-control" name="titulo" required >{dataid.titulo}</label>
+                              </div>
+                              <div className="row mt-3">
+                                  <label className="form-label">Detalle del Caso</label>
+                                  <textarea className="form-control" name="descripcion" required value={dataid.descripcion} onChange={checkData}></textarea>
+                              </div>
+                              <div className="row mt-3">
+                                  <select className="form-select form-select-sm" name="estado" required onChange={checkData}>
+                                      <option defaultValue={dataid.estado}>{dataid.estado}</option>  
+                                      <option value="En Progreso">En Progreso</option>
+                                      <option value="Completado">Completado</option>
+                                      <option value="Cancelado">Cancelado</option>
+                                  </select>
+                              </div>
+                              <div className="row mt-3">
+                                  <label className="form-label">Solución del Caso</label>
+                                  <textarea className="form-control" name="solucion" value={dataid.solucion} onChange={checkData}></textarea>
+                              </div>
+                          </form>
+                          </div>
+                          <div className="modal-footer">
+                              <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={() => {updateData()}}>Salvar</button>
+                          </div>
+                          </div>
+                      </div>
+            </div>
+        </div>
+          )
+      }
+  //</script>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GV</title>
+    <?!= include('frontend/config/cdn')?>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<components style="display: none;">
+    <?!= include('frontend/config/constCdn')?>
+    <?!= include('frontend/Header')?>
+    <?!= include('frontend/routes/Routes')?>
+    <?!= include('frontend/modalsNotificaciones')?>
+
+    <?!= include('frontend/Inicio')?>
+    <?!= include('frontend/Admin')?>
+    <?!= include('frontend/App')?>
+</components>
+</html>

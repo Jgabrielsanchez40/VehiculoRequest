@@ -1,0 +1,344 @@
+//<script type="text/jsx">
+let dato;
+    const formEdit = () => {
+
+        const { id } = useParams()
+        const history = useHistory();
+        const [data, setData] = useState({
+            fechaCreado: " ",
+            creadoPor: " ",
+            fechaViaje: " ",
+            estado: " ",
+            valor: " ",
+            empresa: " ",
+            departamento: " ",
+            viajenecesario: " ",
+            motivoViaje: " ",
+            lugarSalida: " ",
+            horaSalida: " ",
+            lugarLlegada: " ",
+            horaLlegada: " ",
+            tipoServicio: " ",
+            vehiculo: " ",
+            nombreConductor: " ",
+            pasajero1: " ",
+            pasajero2: " ",
+            pasajero3: " ",
+            distanciaBase: " ",
+            clima: " ",
+            vehiculoPasajero: " ",
+            condicionesVia: " ",
+            comunicacionDisponible: " ",
+            horasTrabTiempoViaje: " ",
+            riesgoseguridadfisica: " ",
+            horasViaje: " ",
+            secuenciaViajes: " ",
+            puntosReunion: " ",
+            formatoEME1: " ",
+            EME1VehiculoCondicion: " ",
+            DrivePA: " ",
+            observaciones: " ",
+        })
+
+        useEffect(() => {
+            if(id) {
+                google.script.run.withSuccessHandler(res =>{
+                   dato = JSON.parse(res)
+                   setData({
+                    fechaCreado: dato.fechaCreado,
+                    fechaViaje: dato.fechaViaje,
+                    estado: dato.estado,
+                    valor: dato.valor,
+                    empresa: dato.empresa,
+                    departamento: dato.departamento,
+                    viajenecesario: dato.viajenecesario,
+                    motivoViaje: dato.motivoViaje,
+                    lugarSalida: dato.lugarSalida,
+                    horaSalida: dato.horaSalida,
+                    lugarLlegada: dato.lugarLlegada,
+                    horaLlegada: dato.horaLlegada,
+                    tipoServicio: dato.tipoServicio,
+                    vehiculo: dato.vehiculo,
+                    nombreConductor: dato.nombreConductor,
+                    pasajero1: dato.pasajero1,
+                    pasajero2: dato.pasajero2,
+                    pasajero3: dato.pasajero3,
+                    distanciaBase: dato.distanciaBase,
+                    clima: dato.clima,
+                    vehiculoPasajero: dato.vehiculoPasajero,
+                    condicionesVia: dato.condicionesVia,
+                    comunicacionDisponible: dato.comunicacionDisponible,
+                    horasTrabTiempoViaje: dato.horasTrabTiempoViaje,
+                    riesgoseguridadfisica: dato.riesgoseguridadfisica,
+                    horaViajes: dato.horaViajes,
+                    secuenciaViaje: dato.secuenciaViaje,
+                    puntosReunion: dato.puntosReunion,
+                    formatoEME1: dato.formatoEME1,
+                    EME1VehiculoCondicion: dato.EME1VehiculoCondicion,
+                    DrivePA: dato.DrivePA,
+                    observaciones: dato.observaciones,
+                   })
+                }).listarRequest(id)
+            }
+        }, []);
+
+        function back() {
+            history.push("/listaRequest")
+        }
+    
+        return(
+    
+            <div>
+                <div className="badge bg-primary text-white fst-italic mt-3 mb-3" style={{fontSize: '.9rem'}}>Registro de Gerencia de Viaje Creado Por: {data.creadoPor}</div>
+                <div className="d-flex justify-content-between">
+                    <div className="input-group mb-3">
+                        <span className="input-group-text">Fecha Creado</span>
+                        <span  className="form-control">{data.fechaCreado}</span>
+                        
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="input-group-text">ID</span>
+                        <span  className="form-control">{id}</span>
+                    </div>
+                </div>
+               <form className="needs-validation">
+                <div className="card shadow bg-body-tertiary rounded mb-3">
+                    <div className="card-header bg-secondary text-white">Datos Generales</div>
+                    <div className="card-body">
+                        <div className="row g-3">
+                            <div className="col">
+                            <div className="input-group input-group-sm mb-3">
+                                <span className="input-group-text" label="Fecha de Viaje">Fecha de Viaje</span>
+                                <span type="date" className="form-control" label="Fecha del Viaje">{data.fechaViaje}</span>
+                            </div>
+                            </div>
+                            <div className="col">
+                            <span type="text" className="form-control" >{data.empresa}</span>
+                            </div>
+                            <div className="col">
+                            <span type="text" className="form-control" >{data.departamento}</span>
+                            </div>
+                        </div>
+    
+                        <div className="row g-2">
+                            <div className="col">
+                            <div className="input-group input-group-sm mb-3">
+                                <span className="input-group-text" >Viaje Necesario</span>
+                                <span type="date" className="form-control">{data.viajenecesario}</span>
+                            </div>
+                            <div className="input-group input-group-sm mb-3">
+                                <span className="input-group-text">Motivo del Viaje</span>
+                                <span type="date" className="form-control">{data.motivoViaje}</span>
+                            </div>
+                            </div>
+                        </div>
+    
+                        <div className="row g-4">
+                            <div className="col">
+                            <div className="input-group input-group-sm mb-3">
+                                <span className="input-group-text">Lugar de Salida</span>
+                                <span type="date" className="form-control">{data.lugarSalida}</span>
+                            </div>
+                            </div>
+    
+                            <div className="col">
+                            <div className="input-group input-group-sm mb-3">
+                                <span className="input-group-text">Hora Salida</span>
+                                <span type="date" className="form-control">{data.horaSalida}</span>
+                            </div>
+                            </div>
+                            <div className="col">
+                            <div className="input-group input-group-sm mb-3">
+                                <span className="input-group-text">Lugar de Llegada</span>
+                                <span type="date" className="form-control">{data.lugarLlegada}</span>
+                            </div>
+                            </div>
+                            <div className="col">
+                            <div className="input-group input-group-sm mb-3">
+                                <span className="input-group-text">Hora Llegada</span>
+                                <span type="date" className="form-control">{data.horaLlegada}</span>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                 <div className="card shadow bg-body-tertiary rounded mb-3">
+                    <div className="card-header bg-secondary text-white">Selección Unidad y Agregar Pasajeros</div>
+                    <div className="card-body">
+                        <div className="row g-3">
+                            <div className="col">
+                            <div className="input-group input-group-sm mb-3">
+                                <span className="input-group-text">Tipo Servicio</span>
+                                <span type="date" className="form-control">{data.tipoServicio}</span>
+                            </div>
+                            </div>
+                           
+                            <div className="col">
+                            <div className="input-group input-group-sm mb-3">
+                                <span className="input-group-text">Vehiculo</span>
+                                <span type="date" className="form-control">{data.vehiculo}</span>
+                            </div>
+                            </div>     
+                            <div className="col">
+                            <div className="input-group input-group-sm mb-3">
+                                <span className="input-group-text">Conductor</span>
+                                <span type="date" className="form-control">{data.nombreConductor}</span>
+                            </div>
+                            </div>
+                        </div>
+    
+                      <div className="row">
+                            <div className="col"> 
+                                <span className="input-group-text mb-2">Pasajeros Nombre  y Telefono</span>
+                                <div className="input-group input-group-sm mb-3">
+                                    <span className="input-group-text" >Pasajero 1</span>
+                                    <span type="date" className="form-control">{data.pasajero1}</span>
+                                </div>
+                                <div className="input-group input-group-sm mb-3">
+                                    <span className="input-group-text" >Pasajero 2</span>
+                                    <span type="date" className="form-control">{data.pasajero2}</span>
+                                </div>
+                                <div className="input-group input-group-sm mb-3">
+                                    <span className="input-group-text" >Pasajero 3</span>
+                                    <span type="date" className="form-control">{data.pasajero3}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                 <div className="card shadow bg-body-tertiary rounded mb-3">
+                <div className="card-header bg-secondary text-white">Evaluaciones</div>
+                    <div className="card-body">
+                    <div className="badge bg-primary text-white mt-1 mb-3" style={{fontSize: '.9rem'}}>Evaluo Viaje: {data.valor}</div>
+                        <div className="row g-2">
+                                <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">Distancia desde Base</span>
+                                        <span type="date" className="form-control">{data.distanciaBase}</span>
+                                    </div>
+                                </div>
+                        </div>
+                        <div className="row g-2">
+                                <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">Clima</span>
+                                        <span type="date" className="form-control">{data.clima}</span>
+                                    </div>
+                                </div>
+                        </div>
+                        <div className="row g-2">
+                            <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">Vehículos y Pasajeros</span>
+                                        <span type="date" className="form-control">{data.vehiculoPasajero}</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div className="row g-2">
+                            <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">Condiciones de las Vías</span>
+                                        <span type="date" className="form-control">{data.condicionesVia}</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div className="row g-2">
+                            <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">Comunicación Disponible</span>
+                                        <span type="date" className="form-control">{data.comunicacionDisponible}</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div className="row g-2">
+                            <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">Horas trabajadas + Tiempo de viaje</span>
+                                        <span type="date" className="form-control">{data.horasTrabTiempoViaje}</span>
+                                        
+                                    </div>
+                            </div>
+                        </div>
+                        <div className="row g-2">
+                            <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">Riesgo de seguridad física de viaje</span>
+                                        <span type="date" className="form-control">{data.riesgoseguridadfisica}</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div className="row g-2">
+                            <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">Hora de Viaje</span>
+                                        <span type="date" className="form-control">{data.horaViajes}</span>
+                                    </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+    
+              <div className="card shadow bg-body-tertiary rounded mb-3">
+                    <div className="card-header bg-secondary text-white">Puntos Claves para el Viaje</div>
+                    <div className="card-body">
+                        <div className="row g-2">
+                                <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                         <span className="input-group-text">Secuencia del Viaje</span>
+                                         <span type="date" className="form-control">{data.secuenciaViaje}</span>
+                                    </div>
+                                </div>
+                        </div>
+                        <div className="row g-2">
+                                <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                         <span className="input-group-text">Puntos de reunión / Paradas</span>
+                                         <span type="date" className="form-control">{data.puntosReunion}</span>
+                                    </div>
+                                </div>
+                        </div>
+                        <div className="row g-2">
+                            <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">El conductor realizo el formato EME-1 y/o inspección de vehículo</span>
+                                        <span type="date" className="form-control">{data.formatoEME1}</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div className="row g-2">
+                            <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">Segun Inspección EME-1, vehiculo en condición para Viaje</span>
+                                        <span type="date" className="form-control">{data.EME1VehiculoCondicion}</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div className="row g-2">
+                            <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">El monitor de conducción DrivePA esta funcionando correctamente</span>
+                                        <span type="date" className="form-control">{data.DrivePA}</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div className="row g-2">
+                            <div className="col">
+                                    <div className="input-group input-group-sm mb-3">
+                                        <span className="input-group-text">Observaciónes Adicionales</span>
+                                        <span type="date" className="form-control">{data.observaciones}</span>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <button className='btn btn-primary btn-block' onClick={()=> {back()}}>Regresar</button>
+            </form>
+            </div>
+
+        )
+    }
+    //</script>

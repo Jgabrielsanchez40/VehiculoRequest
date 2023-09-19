@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+    <style>
+       body{
+        font-family: "Roboto";
+       }
+       .container{
+        width: 80%;
+        height: auto;
+        margin: 0 auto;
+        align-content: center;
+        border-radius: 40px 10px;
+        background-color: rgb(249, 250, 253);
+        box-shadow: #464846;
+    
+       }
+
+       .card{
+        height: 280px;
+        width: auto;
+        box-shadow: #464846;
+    
+       }
+
+       .card-header{
+        padding: .1rem;
+        background-color: rgb(197, 199, 206);
+        height: 4rem;
+        border-radius: 40px 10px;
+       }
+
+       .spa{
+        margin-top: 18px;
+        margin-left: 14px;
+       }
+       .card-body{
+        margin-left: 14px;
+       }
+       .btn{
+        background-color: #464846;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 40px 40px 40px 40px;
+       }
+
+       .btn:hover {
+        background-color: #0f2b9d;
+        color:rgb(249, 250, 253)
+       }
+
+       table {
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+       th {
+         background-color: #2a2c2b;
+         color: white;
+         padding: 4px;
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <p class="spa">Ticket UnixFyOne: <?= usuario.id ?> </p>
+            </div>
+            <div class="card-body">
+                <h5 class="card-text">Solicitud Realizado Por: <?= usuario.creado ?></h5>
+                <table>
+                    <thead>
+                        <th>Titulo</th>
+                        <th>Empresa</th>
+                        <th>Fecha Creado</th>
+                        <th>Estado</th>
+                    </thead>
+                    <tbody>
+                        <td><?= usuario.titulo ?></td>
+                        <td><?= usuario.empresa ?></td>
+                        <td><?= usuario.fechaCreado ?></td>
+                        <td {usuario.estado = "No Asignado" ? style="background-color: #FFBB5C;" : style="background-color: #FF6969"><?= usuario.estado ?></td>
+                    </tbody>
+                </table>
+                <p class="card-text">Detalle: <?= usuario.descripcion ?></p>
+                <hr><br>
+                <a href="https://script.google.com/a/macros/sinoenergycorp.com/s/AKfycbzCACjrfP9BtDC4JyOZK6gRBxd_sibG3mX1cjEmWSU/dev" class="btn">Link Aplicación</a>
+              </div>
+        </div>
+   </div>
+</body>
+
+</html>
