@@ -7,7 +7,7 @@ const doGet = () =>
       "viewport",
       'width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"'
     )
-    .setTitle("Tickets");
+    .setTitle("VEH TR");
 
 const include = (ruta) =>
   HtmlService.createHtmlOutputFromFile(ruta).getContent();

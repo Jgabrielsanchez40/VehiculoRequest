@@ -11,7 +11,7 @@
        }
        .container{
         width: 80%;
-        height: auto;
+        height: 100%;
         margin: 0 auto;
         align-content: center;
         border-radius: 40px 10px;
@@ -21,7 +21,7 @@
        }
 
        .card{
-        height: 280px;
+        height: auto;
         width: auto;
         box-shadow: #464846;
     
@@ -64,33 +64,41 @@
          color: white;
          padding: 4px;
         }
+
+        .card-text {
+            font: 10px;
+        }
     </style>
 </head>
 <body>
   <div class="container">
         <div class="card">
             <div class="card-header">
-                <p class="spa">Ticket UnixFyOne: <?= usuario.id ?> </p>
+                <p class="spa">TR Solicitud Vehiculo: <?= usuario.TR ?> </p>
             </div>
             <div class="card-body">
-                <h5 class="card-text">Solicitud Realizado Por: <?= usuario.creado ?></h5>
+                <p class="card-text">Solicitud Realizado Por: <?= usuario.creado ?></p>
+                <p class="card-text">Fecha Creado: <?= usuario.fechaCreado ?></p>
+                <p class="card-text">Nombres: <?= usuario.NombreApellido ?></p>
+                <p class="card-text">Departamento: <?= usuario.Departamento?></p>
                 <table>
-                    <thead>
-                        <th>Titulo</th>
-                        <th>Empresa</th>
-                        <th>Fecha Creado</th>
-                        <th>Estado</th>
+                    <thead class="card-text">
+                        <th class="card-text">Tipo Solicitud</th>
+                        <th class="card-text">Tipo Servicio</th>
+                        <th class="card-text">Fecha Servicio</th>
+                        <th class="card-text">Hora Servicio</th>
+                        <th class="card-text">Estado</th>
                     </thead>
-                    <tbody>
-                        <td><?= usuario.titulo ?></td>
-                        <td><?= usuario.empresa ?></td>
-                        <td><?= usuario.fechaCreado ?></td>
-                        <td {usuario.estado = "No Asignado" ? style="background-color: #FFBB5C;" : style="background-color: #FF6969"><?= usuario.estado ?></td>
+                    <tbody class="card-text">
+                        <td class="card-text"><?= usuario.TipoSolicitud ?></td>
+                        <td class="card-text"><?= usuario.TipoServicio ?></td>
+                        <td class="card-text"><time datetime="2018-07-07"><?= usuario.FechaServicio ?></time></td>
+                        <td class="card-text"><?= usuario.Horarequerida ?></td>
+                        <td class="card-text" {usuario.estado = "No Asignado" ? style="background-color: #FFBB5C;" : style="background-color: #FF6969"><?= usuario.estado ?></td>
                     </tbody>
                 </table>
-                <p class="card-text">Detalle: <?= usuario.descripcion ?></p>
+                <p class="card-text fst-italic">Sistema de Ticket Solicitud de Vehiculos</p>
                 <hr><br>
-                <a href="https://script.google.com/a/macros/sinoenergycorp.com/s/AKfycbzCACjrfP9BtDC4JyOZK6gRBxd_sibG3mX1cjEmWSU/dev" class="btn">Link Aplicación</a>
               </div>
         </div>
    </div>

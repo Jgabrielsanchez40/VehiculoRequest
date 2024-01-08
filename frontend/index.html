@@ -3,35 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GV</title>
+    <title>VTR</title>
     <?!= include('frontend/config/cdn')?>
 </head>
 <body>
     <div id="root"></div>
-
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyC7TTgZS3ihiGF-QC6qT8yBzeaPoxCSu_8",
-          authDomain: "ticketsufo-8ab30.firebaseapp.com",
-          projectId: "ticketsufo-8ab30",
-          storageBucket: "ticketsufo-8ab30.appspot.com",
-          messagingSenderId: "562814574197",
-          appId: "1:562814574197:web:a0b5910dc972b37399223c",
-          measurementId: "G-YE6T5BF09C"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-      </script>
 </body>
 <components style="display: none;">
     <?!= include('frontend/config/constCdn')?>
